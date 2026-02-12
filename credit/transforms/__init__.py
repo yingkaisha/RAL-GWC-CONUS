@@ -4,15 +4,6 @@ from torchvision import transforms as tforms
 from credit.transforms.transforms_wrf import Normalize_WRF, ToTensor_WRF
 from credit.transforms.transforms_dscale import Normalize_Dscale, ToTensor_Dscale
 from credit.transforms.transforms_diag import Normalize_Diag, ToTensor_Diag
-from credit.transforms.transforms_global import (
-    Normalize_ERA5_and_Forcing,
-    ToTensor_ERA5_and_Forcing,
-)
-from credit.transforms.transforms_quantile import (
-    BridgescalerScaleState,
-    NormalizeState_Quantile_Bridgescalar,
-    ToTensor_BridgeScaler,
-)
 
 logger = logging.getLogger(__name__)
 
@@ -30,11 +21,7 @@ def load_transforms(conf, scaler_only=False):
     """
     # ------------------------------------------------------------------- #
     # transform class
-
-    if conf["data"]["scaler_type"] == "std_new":
-        transform_scaler = Normalize_ERA5_and_Forcing(conf)
-
-    elif conf["data"]["scaler_type"] == "std-wrf":
+    if conf["data"]["scaler_type"] == "std-wrf":
         transform_scaler = Normalize_WRF(conf)
 
     elif conf["data"]["scaler_type"] == "std-dscale":
@@ -44,7 +31,7 @@ def load_transforms(conf, scaler_only=False):
         transform_scaler = Normalize_Diag(conf)
 
     else:
-        logger.log("scaler type not supported check data: scaler_type in config file")
+        logger.log("scaler type not supported.")
         raise
 
     if scaler_only:
@@ -52,11 +39,8 @@ def load_transforms(conf, scaler_only=False):
 
     # ------------------------------------------------------------------- #
     # ToTensor class
-
-    if conf["data"]["scaler_type"] == "std_new" or conf["data"]["scaler_type"] == "std_cached":
-        to_tensor_scaler = ToTensor_ERA5_and_Forcing(conf)
-        
-    elif conf["data"]["scaler_type"] == "std-wrf":
+    
+    if conf["data"]["scaler_type"] == "std-wrf":
         to_tensor_scaler = ToTensor_WRF(conf)
 
     elif conf["data"]["scaler_type"] == "std-dscale":
@@ -66,8 +50,8 @@ def load_transforms(conf, scaler_only=False):
         to_tensor_scaler = ToTensor_Diag(conf)
 
     else:
-        # the old ToTensor
-        to_tensor_scaler = ToTensor(conf=conf)
+        logger.log("ToTensor type not supported.")
+        raise
 
     # ------------------------------------------------------------------- #
     # combine transform and ToTensor

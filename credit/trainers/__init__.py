@@ -2,7 +2,6 @@ import copy
 import logging
 
 # Import trainer classes
-from credit.trainers.trainerERA5 import Trainer as TrainerERA5
 from credit.trainers.trainerWRF import Trainer as TrainerWRF
 from credit.trainers.trainerWRF_multi import Trainer as TrainerWRF_Multi
 from credit.trainers.trainerDscale import Trainer as TrainerDscale
@@ -12,7 +11,6 @@ logger = logging.getLogger(__name__)
 
 # define trainer types
 trainer_types = {
-    "era5": (TrainerERA5, "Loading a single or multi-step trainer for the ERA5 dataset"),
     "standard-wrf": (TrainerWRF, "Loading a single-step WRF trainer"),
     "multi-step-wrf": (TrainerWRF_Multi, "Loading a multi-step WRF trainer"),
     "standard-dscale": (TrainerDscale, "Loading a downscaling trainer"),

@@ -3,6 +3,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from credit.losses.base_losses import base_losses
 
 import logging
 
@@ -30,12 +31,15 @@ class DiagLoss(torch.nn.Module):
             self.var_weights = torch.from_numpy(var_weights)
 
         # ------------------------------------------------------------- #
-        self.validation = validation
-
+        self.validation = validation # True / False
+        
         if self.validation:
-            self.loss_fn = nn.L1Loss(reduction="none")
+            if "validation_loss" in conf["loss"]:
+                self.loss_fn = base_losses(conf, reduction="none", validation=True)
+            else:
+                self.loss_fn = torch.nn.L1Loss(reduction="none")
         else:
-            self.loss_fn = nn.L1Loss(reduction="none")
+            self.loss_fn = base_losses(conf, reduction="none", validation=False)
 
     def forward(self, target, pred):
         # User defined loss

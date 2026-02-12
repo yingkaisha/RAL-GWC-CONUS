@@ -1,15 +1,6 @@
 import torch.nn as nn
 import logging
 
-from credit.losses.logcosh import LogCoshLoss
-from credit.losses.xtanh import XTanhLoss
-from credit.losses.xsigmoid import XSigmoidLoss
-from credit.losses.msle import MSLELoss
-from credit.losses.kcrps import KCRPSLoss
-from credit.losses.spectral import SpectralLoss2D
-from credit.losses.power import PSDLoss
-from credit.losses.almost_fair_crps import AlmostFairKCRPSLoss
-
 logger = logging.getLogger(__name__)
 
 
@@ -40,15 +31,6 @@ def base_losses(conf, reduction="mean", validation=False):
     losses = {
         "mse": nn.MSELoss,
         "mae": nn.L1Loss,
-        "msle": MSLELoss,
-        "huber": nn.HuberLoss,
-        "logcosh": LogCoshLoss,
-        "xtanh": XTanhLoss,
-        "xsigmoid": XSigmoidLoss,
-        "KCRPS": KCRPSLoss,
-        "almost-fair-crps": AlmostFairKCRPSLoss,
-        "spectral": SpectralLoss2D,
-        "power": PSDLoss,
     }
 
     if loss_type in losses:

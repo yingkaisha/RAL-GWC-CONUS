@@ -4,28 +4,12 @@ import numpy as np
 import logging
 
 from credit.losses.base_losses import base_losses
-from credit.losses.spectral import SpectralLoss2D
-from credit.losses.power import PSDLoss
-
 
 logger = logging.getLogger(__name__)
 
 
 def latitude_weights(conf):
-    """Calculate latitude-based weights for loss function.
-    This function calculates weights based on latitude values
-    to be used in loss functions for geospatial data. The weights
-    are derived from the cosine of the latitude and normalized
-    by their mean.
-
-    Args:
-        conf (dict): Configuration dictionary containing the
-            path to the latitude weights file.
-
-    Returns:
-        torch.Tensor: A 2D tensor of weights with dimensions
-            corresponding to latitude and longitude.
-    """
+    
     # Open the dataset and extract latitude and longitude information
     ds = xr.open_dataset(conf["loss"]["latitude_weights"])
     lat = torch.from_numpy(ds["latitude"].values).float()
@@ -95,43 +79,7 @@ class VariableTotalLoss2D(torch.nn.Module):
     """
 
     def __init__(self, conf, validation=False):
-        """Initialize the VariableTotalLoss2D.
-
-        Args:
-            conf (str): path to config file.
-            training_loss (str): Loss equation to use during training.
-            vars (list): Atmospheric, surface, and diagnostic variable names.
-            lat_weights (str): Path to upper latitude weights file.
-            var_weights (bool): Whether to use variable weights during training.
-            use_spectral_loss (bool): Whether to use spectral loss during training.
-
-            varname_surface (list): List of surface variable names.
-            varname_dyn_forcing (list): List of dynamic forcing variable names.
-            varname_forcing (list): List of forcing variable names.
-            varname_static (list): List of static variable names.
-            varname_diagnostic (list): List of diagnostic variable names.
-            filenames (list): List of filenames for upper air data.
-            filename_surface (list, optional): List of filenames for surface data.
-            filename_dyn_forcing (list, optional): List of filenames for dynamic forcing data.
-            filename_forcing (str, optional): Filename for forcing data.
-            filename_static (str, optional): Filename for static data.
-            filename_diagnostic (list, optional): List of filenames for diagnostic data.
-            history_len (int, optional): Length of the history sequence. Default is 2.
-            forecast_len (int, optional): Length of the forecast sequence. Default is 0.
-            transform (callable, optional): Transformation function to apply to the data.
-            seed (int, optional): Random seed for reproducibility. Default is 42.
-            skip_periods (int, optional): Number of periods to skip between samples.
-            one_shot(bool, optional): Whether to return all states or just
-                                    the final state of the training target. Default is None
-            max_forecast_len (int, optional): Maximum length of the forecast sequence.
-            shuffle (bool, optional): Whether to shuffle the data. Default is True.
-
-        Returns:
-            sample (dict): A dictionary containing historical_ERA5_images,
-                                                 target_ERA5_images,
-                                                 datetime index, and additional information.
-
-        """
+        
         super(VariableTotalLoss2D, self).__init__()
 
         self.conf = conf
@@ -164,22 +112,11 @@ class VariableTotalLoss2D(torch.nn.Module):
             var_weights = np.array([item for sublist in var_weights for item in sublist])
 
             self.var_weights = torch.from_numpy(var_weights)
-        # ------------------------------------------------------------- #
+        # # ------------------------------------------------------------- #
 
-        self.use_spectral_loss = conf["loss"]["use_spectral_loss"]
-        if self.use_spectral_loss:
-            self.spectral_lambda_reg = conf["loss"]["spectral_lambda_reg"]
-            self.spectral_loss_surface = SpectralLoss2D(wavenum_init=conf["loss"]["spectral_wavenum_init"], reduction="none")
-
-        self.use_power_loss = conf["loss"]["use_power_loss"] if "use_power_loss" in conf["loss"] else False
-        if self.use_power_loss:
-            self.power_lambda_reg = conf["loss"]["spectral_lambda_reg"]
-            self.power_loss = PSDLoss(wavenum_init=conf["loss"]["spectral_wavenum_init"])
-
-        self.validation = validation
-        if conf["loss"]["training_loss"] == "KCRPS":  # for ensembles, load same loss for train and valid
-            self.loss_fn = base_losses(conf, reduction="none", validation=False)
-        elif self.validation:
+        self.validation = validation # True / False
+        
+        if self.validation:
             if "validation_loss" in conf["loss"]:
                 self.loss_fn = base_losses(conf, reduction="none", validation=True)
             else:
@@ -188,20 +125,7 @@ class VariableTotalLoss2D(torch.nn.Module):
             self.loss_fn = base_losses(conf, reduction="none", validation=False)
 
     def forward(self, target, pred):
-        """Calculate the total loss for the given target and prediction.
-
-        This method computes the base loss between the target and prediction,
-        applies latitude and variable weights, and optionally adds spectral
-        and power loss components.
-
-        Args:
-            target (torch.Tensor): Ground truth tensor.
-            pred (torch.Tensor): Predicted tensor.
-
-        Returns:
-            torch.Tensor: The computed loss value.
-
-        """
+        
         # User defined loss
         loss = self.loss_fn(target, pred)
 
@@ -219,12 +143,5 @@ class VariableTotalLoss2D(torch.nn.Module):
             loss_dict[f"loss_{var}"] = var_loss.mean()
 
         loss = torch.mean(torch.stack(list(loss_dict.values())))
-
-        # Add the spectral loss
-        if not self.validation and self.use_power_loss:
-            loss += self.power_lambda_reg * self.power_loss(target, pred, weights=self.lat_weights)
-
-        if not self.validation and self.use_spectral_loss:
-            loss += self.spectral_lambda_reg * self.spectral_loss_surface(target, pred, weights=self.lat_weights).mean()
-
+        
         return loss

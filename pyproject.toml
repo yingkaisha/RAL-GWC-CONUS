@@ -53,24 +53,7 @@ dependencies = [
 [tool.setuptools]
 packages = ["credit", "credit.models", "credit.metadata", "credit.datasets", "credit.trainers", "credit.losses", "credit.transforms"]
 
-[project.scripts]
-credit_train = "credit.applications.train:main_cli"
-credit_rollout_realtime = "credit.applications.rollout_realtime:main_cli"
-credit_gfs_init = "credit.applications.gfs_init:main"
-credit_gefs_init = "credit.applications.gefs_init:main"
-credit_rollout_to_netcdf = "credit.applications.rollout_to_netcdf:main"
-credit_rollout_metrics = "credit.applications.rollout_metrics:main"
-credit_calc_global_solar = "credit.applications.calc_global_solar:main"
-
 [tool.setuptools.dynamic]
 version = {file = "credit/VERSION"}
 
-[tool.ruff]
-src = ["credit", "applications", "tests"]
-line-length = 200
 
-[tool.ruff.lint.per-file-ignores]
-"*.ipynb" = ["E402"]
-
-[tool.ruff.lint.pydocstyle]
-convention = "google"

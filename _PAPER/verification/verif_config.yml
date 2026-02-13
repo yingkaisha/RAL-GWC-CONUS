@@ -1,0 +1,4 @@
+qsub:
+    qsub_loc: '/glade/u/home/ksha/CONUS-404-prep/qsub/'
+    scripts_loc: '/glade/u/home/ksha/CONUS-404-prep/verification/scripts/'
+    plot_data_loc: '/glade/campaign/ral/hap/ksha/DWC/PLOT_data/'

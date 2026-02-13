@@ -10,9 +10,10 @@ An AI-based Limited-Area Model (LAM) is developed for dynamical downscaling over
 
 ## Introduction
 
-This repository contains code for data preprocessing, AI model training, inference, and result evaluation for the main paper.
+This repository contains code for data preprocessing, AI model training, inference, and result evaluation for the main paper. The AI model training and inference part is modified from the [MILES-CREDIT](https://github.com/NCAR/miles-credit) platform. The object-oriented verification was conducted directly using the [METplus](https://dtcenter.org/software-tools/metplus) tool.
 
-The AI model training and inference part is modified from the [MILES-CREDIT](https://github.com/NCAR/miles-credit) platform. The object-oriented verification was conducted directly using the [METplus](https://dtcenter.org/software-tools/metplus) tool.
+* Setup environment: On NCAR HPC Derecho, run `create_derecho_env.sh` directly from the repository folder. For non-NCAR users, please refer to the MILES-CREDIT documentation [[Link]](https://miles-credit.readthedocs.io/en/latest/)
+* Create YAML and PBS files based on the following examples: [coming soon].
 
 ## Navigation
 * Downscaling domain information [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_Geoinfo.ipynb)

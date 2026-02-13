@@ -1,0 +1,9 @@
+
+figure:
+    save_loc: '/glade/u/home/ksha/figures/'
+    keys:
+        dpi: 250
+        orientation: 'portrait' 
+        bbox_inches: 'tight' 
+        pad_inches: 0.1 
+        transparent: False

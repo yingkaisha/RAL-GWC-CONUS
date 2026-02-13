@@ -16,9 +16,19 @@ The AI model training and inference part is modified from the [MILES-CREDIT](htt
 
 ## Navigation
 
-coming soon
+### Figures
+* Downscaling domain information [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_Geoinfo.ipynb)
+* RMSE and energy spectrum verification [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_RMSE_ZES.ipynb)
+* Climatology comparison results [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_CLIM_compare.ipynb)
+* Downscaled TMAX, TMIN verification [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_TMAX_TMIN.ipynb)
+* Hurricane example [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_example_TC_case.ipynb) Frontal-cyclone example [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_example_Front_case.ipynb)
+* CESM-LENS2 downscaling evaluations [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_CESM_30Y_T2.ipynb) [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_CESM_30Y_PWAT.ipynb) [[Link]](https://github.com/yingkaisha/RAL-GWC-CONUS/blob/main/_PAPER/visualization/FIG_CESM_ENS.ipynb)  
 
 ## Model Weights
+
+coming soon
+
+## Resources
 
 coming soon
 

@@ -1,10 +1,9 @@
 # `TEST`: debugging configs
 
-* Single-step pre-training (multi-GPU):
-* Single-step pre-training (single-GPU):
-* Multi-step fine-tuning:
-* Inference tests (multi-GPU): 
-* Inference tests (single-GPU): 
+* Single-step pre-training (multi-GPU): `model_single.yml`, `launch_single.sh`
+* Single-step pre-training (single-GPU): `model_single_none.yml`
+* Multi-step fine-tuning: `model_multi_01.yml`, `launch_multi_01.sh`
+* Inference tests: `model_predict_clim.yml`, `launch_predict_clim.sh`
 
 # `CONUS_GP_clean`: model configs
 
@@ -19,5 +18,6 @@
   - Downscale CESM-LENS2 MOAR members: `model_clim_CESM_mem00.yml`, `launch_clim_CESM_mem00.sh`, ..., `model_clim_CESM_mem09.yml`, `launch_clim_CESM_mem09.sh`
 
   *Others: `_p2` stands for "part2"; they break long inference runs into multiple PBS jobs.
+
 
 

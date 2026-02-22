@@ -1,4 +1,12 @@
-# Model configs
+# `TEST`: debugging configs
+
+* Single-step pre-training (multi-GPU):
+* Single-step pre-training (single-GPU):
+* Multi-step fine-tuning:
+* Inference tests (multi-GPU): 
+* Inference tests (single-GPU): 
+
+# `CONUS_GP_clean`: model configs
 
 * Single-step pre-training: `model_single.yml`, `launch_single.sh`
 * Multi-step fine-tuning: `model_multi_01.yml`, `launch_multi_01.sh`, ..., `model_multi_05.yml`, `launch_multi_05.sh`

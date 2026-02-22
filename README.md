@@ -29,7 +29,16 @@ coming soon
 
 ## Resources
 
-coming soon
+* NSF NCAR Research Data Archive, [ERA5 Reanalysis (0.25 Degree Latitude-Longitude Grid)](https://rda.ucar.edu/datasets/d633000/)
+  * Note: this repository visits RDA internally, e.g., `/glade/campaign/collections/rda/data/d633000/e5.oper.an.pl/197901/`
+
+* Google Research, Analysis-Ready, Cloud Optimized (ARCO) ERA5 [[link](https://cloud.google.com/storage/docs/public-datasets/era5)]
+
+* Four-kilometer long-term regional hydroclimate reanalysis over the conterminous United States (CONUS404) [[link](https://gdex.ucar.edu/datasets/d559000/)]
+
+* CESM2 Large Ensemble Community Project (LENS2) [[link](https://www.cesm.ucar.edu/community-projects/lens2)]
+
+* NSF NCAR MILES Community Research Earth Digital Intelligence Twin (CREDIT) [[link](https://github.com/NCAR/miles-credit)]
 
 # Acknowledgement
 This repository is based upon work supported by the National Science Foundation (NSF) National Center for Atmospheric Research (NCAR), which is a major facility sponsored by the U.S. National Science Foundation under Cooperative Agreement No. 1852977. 

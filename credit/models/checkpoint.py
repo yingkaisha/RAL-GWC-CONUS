@@ -15,13 +15,6 @@ from typing import Union
 from torch import Tensor
 from torch.utils._pytree import tree_map
 
-
-# adapted from https://github.com/hpcaitech/ColossalAI/blob/f2e8b9ef9ff3032513732a699d766bcde1a3506e/colossalai/booster/plugin/torch_fsdp_plugin.py
-
-
-# utils
-
-
 def load_state_dict_error_handler(load_msg):
     if load_msg[1]:
         raise RuntimeError(str(load_msg))
@@ -216,7 +209,6 @@ class TorchFSDPCheckpointIO:
                 checkpoint_file_path=checkpoint,
                 use_safetensors=False,
             )
-
 
 class ModelWrapper(nn.Module):
     """

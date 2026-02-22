@@ -69,23 +69,3 @@ def generate_forecasts(
     logger.info(f"Generated {len(forecasts)} unique forecast periods ")
 
     return forecasts
-
-
-if __name__ == "__main__":
-    # Example usage
-    forecast_details = {
-        "type": "custom",
-        "start_year": 2018,
-        "start_month": 6,
-        "start_day": 1,
-        "days": 10,
-        "start_hours": [0, 12],
-        "duration": 4,
-    }
-
-    conf = {"predict": {"forecasts": forecast_details}}
-    forecasts = load_forecasts(conf)
-
-    # Print example forecasts
-    for forecast in forecasts:
-        print(forecast)

@@ -181,38 +181,3 @@ def annealed_probability(epoch, max_epochs=100, min_probability=0.01, max_probab
     return termination_probability
 
 
-if __name__ == "__main__":
-    import matplotlib.pyplot as plt
-
-    num_epochs = 100
-    batches_per_epoch = 500
-    learning_rate = 1e-3
-
-    model = torch.nn.Sequential(*[torch.nn.Linear(1, 2)])
-
-    optimizer = torch.optim.AdamW(model.parameters(), learning_rate)
-
-    # Assume optimizer is the optimizer you are using
-    scheduler = CosineAnnealingWarmupRestarts(
-        optimizer,
-        first_cycle_steps=batches_per_epoch,
-        cycle_mult=6.0,
-        max_lr=learning_rate,
-        min_lr=1e-3 * learning_rate,
-        warmup_steps=batches_per_epoch - 1,
-        gamma=0.7,
-    )
-
-    lr_values = []
-
-    for epoch in range(num_epochs):
-        for batch in range(batches_per_epoch):
-            optimizer.step()  # Update parameters
-            scheduler.step()  # Update learning rate
-            lr_values.append(optimizer.param_groups[0]["lr"])
-
-    # Plot learning rate
-    plt.plot(lr_values)
-    plt.xlabel("Batch update")
-    plt.ylabel("Learning rate")
-    plt.show()

@@ -215,10 +215,3 @@ def get_num_cpus():
         num_cpus = os.cpu_count()
     return int(num_cpus)
 
-
-if __name__ == "__main__":
-    config_file = "../config/vit2d.yml"
-    # Where does this script live?
-    script_path = "../applications/trainer_vit2d.py"
-    launch_script(config_file, script_path, launch=False)
-    # launch_script_mpi(config_file, script_path, launch = False)

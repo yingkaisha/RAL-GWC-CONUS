@@ -1,12 +1,12 @@
 # AI-based Limited Area Model for Dynamical Downscaling of Long-term Kilometer-scale Weather Information
 
-Yingkai Sha, Tracy Hertneky, Ethan Gutmann, Seth McGinnis, Lulin Xue, David John Gagne II, Kathryn Newman, Andrew Newman
+Yingkai Sha, Tracy Hertneky, Ethan Gutmann, Seth McGinnis, Rachel McCrary, Lulin Xue, David John Gagne II, Kathryn Newman, Andrew Newman
 
 NSF National Center for Atmospheric Research, Boulder, Colorado, USA
 
 ## Abstract
 
-An AI-based Limited-Area Model (LAM) is developed for dynamical downscaling over the Southern Great Plains and the southeastern United States, with strong generalization abilities under diverse boundary conditions. The model is trained using 0.25-degree, 3-hourly ERA5 as forcings and CONUS404 as targets in 1980--2019, producing 4-km, hourly dynamical downscaling outputs; it is also connected to a post-processing model to derive additional diagnostic variables. The model is evaluated across multiple forcing datasets, time periods, and climate regimes. For present-day downscaling in the 2021--2024 water years, the model produces stable multi-year simulations with no unrealistic drift; its deterministic verification skills are comparable to other weather-forecasting-oriented AI models. The model also generalizes robustly to a 1.0-degree, 6-hourly non-ERA5 forcing dataset, yielding only minor performance changes. Frontal cyclone and hurricane case studies further demonstrate that the model reconstructs realistic, interpretable weather-scale dynamical and thermodynamic structure from coarse boundary information. The AI-based LAM is further tested by downscaling 30-year global climate model runs in 1980--2010 and 2070--2100, and climate model ensembles in 2025-2027. In this application, the model remains stable at hourly downscaling frequencies for all 30 years and effectively captures future climate-change signals, indicating meaningful generalization across different climate regimes. When downscaling ensembles, the model produces well-posed ensemble distributions without collapsing the ensemble spread. Overall, the AI-based LAM of this study offers good downscaling performance and generalization abilities. It provides a practical and transferable example of adapting AI weather prediction models for regional climate applications.
+An AI-based Limited-Area Model (LAM) is developed for dynamical downscaling over the Southern Great Plains and the southeastern United States, with strong generalization abilities under diverse boundary conditions. The model is trained using 0.25$^\circ$, 3-hourly ERA5 as forcings and CONUS404 as targets in 1980--2019, producing 4-km, hourly dynamical downscaling outputs; it is also connected to a post-processing model to derive additional diagnostic variables. The model is evaluated across multiple forcing datasets, time periods, and climate regimes. For present-day downscaling in water years 2021--2024, the model produces stable multi-year simulations with no unrealistic drift; its deterministic verification scores are comparable to other weather-forecasting-oriented AI models. The model also generalizes robustly to a 1.0-degree, 6-hourly non-ERA5 forcing dataset, yielding only minor performance changes. Frontal cyclone and hurricane case studies further demonstrate that the model reconstructs realistic, interpretable weather-scale dynamical and thermodynamic structure from coarse boundary information. The AI-based LAM is further tested by downscaling 30-year global climate model runs in 1980--2010 and 2070--2100, and climate model ensembles in 2025--2027. In this application, the model remains stable at hourly downscaling frequencies for all 30 years and effectively captures climate-change signals, indicating meaningful generalization across different climate regimes. When downscaling ensembles, the model produces well-posed member distributions without collapsing the ensemble spread. Overall, the AI-based LAM of this study offers good downscaling performance and generalization abilities. It provides a practical example of adapting AI weather prediction models for regional climate applications, with generalization across boundary forcing datasets and climate regimes.
 
 ## Introduction
 
@@ -27,13 +27,14 @@ This repository contains code for data preprocessing, AI model training, inferen
 ## Resources
 
 * NSF NCAR Research Data Archive, [ERA5 Reanalysis (0.25 Degree Latitude-Longitude Grid)](https://rda.ucar.edu/datasets/d633000/)
-  * Note: this repository visits RDA internally, e.g., `/glade/campaign/collections/rda/data/d633000/e5.oper.an.pl/197901/`
 
 * Google Research, Analysis-Ready, Cloud Optimized (ARCO) ERA5 [[link](https://cloud.google.com/storage/docs/public-datasets/era5)]
 
 * Four-kilometer long-term regional hydroclimate reanalysis over the conterminous United States (CONUS404) [[link](https://gdex.ucar.edu/datasets/d559000/)]
 
 * CESM2 Large Ensemble Community Project (LENS2) [[link](https://www.cesm.ucar.edu/community-projects/lens2)]
+
+* NCEP FNL Operational Model Global Tropospheric Analyses [[link](https://gdex.ucar.edu/datasets/d083002/)]
 
 * NSF NCAR MILES Community Research Earth Digital Intelligence Twin (CREDIT) [[link](https://github.com/NCAR/miles-credit)]
 

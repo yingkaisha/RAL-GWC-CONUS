@@ -1,0 +1,124 @@
+# --------------------------------------------------------------------------------------------------------------------- #
+# WRF experiments
+# --------------------------------------------------------------------------------------------------------------------- #
+
+save_loc: '/glade/work/ksha/DWC_runs/CONUS_GP_diag_unet/'
+seed: 1000
+
+
+data:
+    levels: 12
+
+    variables: ['WRF_U', 'WRF_V', 'WRF_T', 'WRF_Q_tot_05']
+    save_loc: '/glade/derecho/scratch/ksha/DWC_data/CONUS_domain_GP/C404_new/C404_GP_*.zarr'
+
+    surface_variables: ['WRF_SP', 'WRF_MSLP', 'WRF_T2', 'WRF_TD2', 'WRF_U10', 'WRF_V10', 'WRF_PWAT_05']
+    save_loc_surface: '/glade/derecho/scratch/ksha/DWC_data/CONUS_domain_GP/C404_new/C404_GP_*.zarr'
+
+    diagnostic_variables: ['WRF_precip_025', 'WRF_radar_composite_025', 'WRF_OLR', 'WRF_TCC', 'WRF_GLW', 'WRF_SWDOWN', 'WRF_SMOIS', 'WRF_TSLB']
+    save_loc_diagnostic: '/glade/derecho/scratch/ksha/DWC_data/CONUS_domain_GP/C404_new/C404_GP_*.zarr'
+
+    static_variables: ['z_norm', 'var_norm', 'lu_norm', 'LANDMASK']
+    save_loc_static: '/glade/derecho/scratch/ksha/DWC_data/CONUS_domain_GP/static/C404_GP_static.zarr'
+    
+    history_len: 1
+    valid_history_len: 1
+
+    forecast_len: 0
+    valid_forecast_len: 0
+
+    # mean / std path
+    mean_path: '/glade/derecho/scratch/ksha/DWC_data/CONUS_domain_GP/mean_std/C404_mean_1980_2019_12lev.nc'
+    std_path: '/glade/derecho/scratch/ksha/DWC_data/CONUS_domain_GP/mean_std/C404_std_1980_2019_12lev.nc'
+
+    # train / validation split
+    train_years: [1980, 2019]
+    valid_years: [2019, 2020]
+    test_years: [2020, 2022]
+
+    # data workflow
+    scaler_type: 'std-diag'
+
+    one_shot: False
+    lead_time_periods: 1
+    skip_periods: null
+    static_first: True
+
+
+trainer:
+    type: standard-diag
+    
+    mode: fsdp
+    cpu_offload: False
+    activation_checkpoint: True
+    
+    load_weights: True
+    load_optimizer: True
+    load_scaler: True
+    load_sheduler: True
+    num_epoch: 15
+    
+    skip_validation: False
+    update_learning_rate: False
+    
+    save_backup_weights: True
+    save_best_weights: True
+    save_metric_vars: True
+    
+    learning_rate: 1.0e-03
+    weight_decay: 1.0e-06
+    
+    train_batch_size: 1
+    valid_batch_size: 1
+    
+    batches_per_epoch: 0
+    valid_batches_per_epoch: 0
+    stopping_patience: 999
+    
+    start_epoch: 0
+
+    reload_epoch: True
+    epochs: &epochs 120
+    
+    use_scheduler: True
+    scheduler: {'scheduler_type': 'cosine-annealing', 'T_max': *epochs,  'last_epoch': -1}
+    
+    amp: False
+    grad_accum_every: 1 
+    grad_max_norm: 32.0
+    thread_workers: 4
+    valid_thread_workers: 0
+
+
+model:
+    type: "unet"
+    levels: 12
+    image_height: 336
+    image_width: 336
+    total_input_channels: 59
+    total_target_channels: 8
+    frames: 1
+    dim: [64, 128, 256, 512]
+    time_encode_dim: 4
+    use_spectral_norm: True
+    interp: False
+
+    padding_conf:
+        activate: False
+
+    post_conf:
+        activate: False
+
+    
+loss: 
+    # the main training loss
+    training_loss: "mae"
+    
+    use_power_loss: False 
+    use_spectral_loss: False
+
+    use_latitude_weights: False
+    latitude_weights: '/glade/derecho/scratch/ksha/DWC_data/CONUS_domain_GP/static/C404_GP_static.zarr'
+
+    use_variable_weights: False
+    
